@@ -1,0 +1,9 @@
+backend/.env
+interview_prep_guide.md
+node_modules/
+__pycache__/
+.venv/
+dist/
+.env
+.env.local
+.env.*.local
