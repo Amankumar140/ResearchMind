@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getReportDetail } from '../services/api';
 import MarkdownViewer from '../components/MarkdownViewer';
+import CriticReview from '../components/CriticReview';
 import DownloadButton from '../components/DownloadButton';
 import AgentStatusCard from '../components/AgentStatusCard';
 import { ArrowLeft, Calendar, FileText, CheckCircle2, Loader2 } from 'lucide-react';
@@ -91,15 +92,7 @@ export default function ReportViewer() {
 
       {/* Critic Feedback */}
       {reportData.critic_review && (
-        <div className="p-8 rounded-2xl bg-[#50c878]/5 border border-[#50c878]/30 flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-[#50c878] font-mono text-xs uppercase tracking-widest font-bold border-b border-[#50c878]/20 pb-3">
-            <CheckCircle2 className="w-4 h-4" />
-            Critic Review & Evaluation
-          </div>
-          <div className="font-sans text-sm text-[#cdc8bf] whitespace-pre-wrap leading-relaxed">
-            {reportData.critic_review}
-          </div>
-        </div>
+        <CriticReview reviewText={reportData.critic_review} />
       )}
 
       {/* Raw Traces */}

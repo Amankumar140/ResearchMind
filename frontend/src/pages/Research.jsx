@@ -5,6 +5,7 @@ import SearchBox from '../components/SearchBox';
 import ProgressTimeline from '../components/ProgressTimeline';
 import AgentStatusCard from '../components/AgentStatusCard';
 import MarkdownViewer from '../components/MarkdownViewer';
+import CriticReview from '../components/CriticReview';
 import DownloadButton from '../components/DownloadButton';
 import ErrorBanner from '../components/ErrorBanner';
 import { useResearch } from '../hooks/useResearch';
@@ -112,15 +113,7 @@ export default function Research() {
 
             {/* Critic Feedback Panel */}
             {taskData.critic_review && (
-              <div className="p-8 rounded-2xl bg-[#50c878]/5 border border-[#50c878]/30 flex flex-col gap-4">
-                <div className="flex items-center gap-2 text-[#50c878] font-mono text-xs uppercase tracking-widest font-bold border-b border-[#50c878]/20 pb-3">
-                  <CheckCircle2 className="w-4 h-4" />
-                  Automated Peer Review (Critic Chain)
-                </div>
-                <div className="font-sans text-sm text-[#cdc8bf] whitespace-pre-wrap leading-relaxed">
-                  {taskData.critic_review}
-                </div>
-              </div>
+              <CriticReview reviewText={taskData.critic_review} />
             )}
 
           </div>
