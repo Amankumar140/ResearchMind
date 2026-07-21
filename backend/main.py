@@ -83,13 +83,26 @@ def start_research(payload: ResearchRequest):
         timestamp_str = time.strftime("%Y-%m-%d %H:%M:%S")
         created_at = time.time()
         
+        import json
+        search_results_val = state.get("search_results")
+        if isinstance(search_results_val, (list, dict)):
+            search_results_val = json.dumps(search_results_val)
+        else:
+            search_results_val = str(search_results_val) if search_results_val is not None else ""
+
+        scraped_content_val = state.get("scraped_content")
+        if isinstance(scraped_content_val, (list, dict)):
+            scraped_content_val = json.dumps(scraped_content_val)
+        else:
+            scraped_content_val = str(scraped_content_val) if scraped_content_val is not None else ""
+        
         cursor.execute(
             """
             INSERT OR REPLACE INTO research_history 
             (id, topic, timestamp, report, critic_review, search_results, scraped_content, created_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (task_id, topic, timestamp_str, state["report"], state["feedback"], state["search_results"], state["scraped_content"], created_at)
+            (task_id, topic, timestamp_str, state["report"], state["feedback"], search_results_val, scraped_content_val, created_at)
         )
         conn.commit()
         conn.close()
@@ -101,8 +114,8 @@ def start_research(payload: ResearchRequest):
             "status": "completed",
             "current_step": 4,
             "step_name": "Research Completed",
-            "search_results": state["search_results"],
-            "scraped_content": state["scraped_content"],
+            "search_results": search_results_val,
+            "scraped_content": scraped_content_val,
             "report": state["report"],
             "critic_review": state["feedback"],
             "created_at": timestamp_str,
